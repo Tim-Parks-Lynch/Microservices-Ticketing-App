@@ -41,4 +41,14 @@
   - stripeId: string
   - stripeRefundId: string
 
-  
+# Event Types
+
+* UserCreated
+* UserUpdated
+* OrderCreated
+* OrderCancelled
+* OrderExpired
+* TicketCreated
+* TicketUpdated
+* ChargeCreated
+
