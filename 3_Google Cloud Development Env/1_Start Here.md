@@ -4,5 +4,4 @@ This folder is for when you need to setup a google cloud web development server.
 
 2. We will make a change in our skaffold.yaml file to point to Google Cloud VM. This means that any changes made to our files get synced up to Google Cloud thanks to Skaffold. A rebuild will happen if something happens to an unsynced file (think package.json file), skaffold reaches out to the Google Cloud Build service in Google Cloud that will build the docker image for us. Then that rebuilt image gets sent to the Google Cloud VM. 
 
-
-
+3. Stopping here as I don't have the money to run Google Cloud at this time. I will revisit this after getting a job. 
