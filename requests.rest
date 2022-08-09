@@ -1,0 +1,19 @@
+GET ticketing.dev/api/users/currentUser
+
+###
+POST ticketing.dev/api/users/signup
+Content-Type: application/json
+
+{
+  "email": "testtest.com",
+  "password": "1"
+}
+
+###
+POST ticketing.dev/api/users/signup
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "dkfadfadfakdfkj"
+}

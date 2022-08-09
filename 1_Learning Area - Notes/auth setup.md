@@ -11,6 +11,7 @@
 * Inside of terminal in the auth directory run the following commands:
   * npm init - y //creates package.json
   * npm install typescript ts-node-dev express @types/express //installs dependencies
+  * npm install express-validator
   * tsc --init //creates tsconfig.json file
 * Create a new folder called src inside of auth folder
 * Create a new file named index.ts inside of the src folder - code below
