@@ -2,6 +2,7 @@
 
 * If skaffold does not detect changes go to your package.json file inside of the auth directory and put in the following for the 'start' script:
  * ts-node-dev --poll src/index.ts
+* We modify the host file on our main machine for this example to work. If you don't know how to do this without messing up your computer please jump to the portion about leveraging a cloud environment for development (this will cost money). You modify the host file at your own risk, if you don't know how to do it successfully there are tutorials online but make sure you follow one that is trustworthy. 
 
 
 ## Starting
@@ -40,6 +41,11 @@ Kubernetes Setup
 * Code below
 * Inside terminal inside of the ticketing directory type: 
   * skaffold dev
+
+
+## Ingress-Nginx Setup
+  * We should not have to reinstall ingress-nginx as we never deleted it. 
+  * Inside the infra/k8s folder create a new ingress-srv.yaml file. Copy the code below and put it inside
 
 # Starter Code for all the setups above
 
@@ -133,3 +139,64 @@ build:
             dest: . # where to sync the file to 
 
 ```
+
+### ingress-nginx code
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - host: ticketing.dev
+      http:
+        paths:
+        #?(.*) means anything for api/user/wildcard
+          - path: /api/user/?(.*) 
+            pathType: Prefix
+            backend:
+              service:
+              # Name of service we want to send the request to
+                name: auth-srv
+                port:
+                # Port to send the service request to, needs to be port of auth-srv
+                  number: 3000
+```
+
+### Host File change
+
+For Mac:
+
+Go to /etc/hosts and open it with a code editor in administrator mode. At the end of the section put on a new line the following
+
+```md
+
+#End of section
+
+127.0.0.1 ticketing.dev
+
+```
+
+After this you should be able to go to ticketing.dev/api/users/currentuser and get the words "Hello There"
+
+For Windows:
+
+Go to C:\Windows\Systems32\Drivers\etc\hosts and open it with a code editor in administrator mode. At the end of the section put on a new line the following:
+
+```md
+
+#End of section
+
+127.0.0.1 ticketing.dev
+
+```
+
+After this you should be able to go to ticketing.dev/api/users/currentuser and get the words "Hello There"
+
+
+You might get a notification about your connection is not private. This is fine, it's because the server doesn't have an SSL cert. Just confirm it says ticketing.dev before clicking anywhere on the whitespace on the page and typing out 'thisisunsafe' without the quotes. You won't see the writing but if you typed it correctly it will jump to the next page. 
+
